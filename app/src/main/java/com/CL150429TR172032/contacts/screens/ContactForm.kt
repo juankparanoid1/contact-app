@@ -42,7 +42,7 @@ class ContactForm : AppCompatActivity() {
     private lateinit var storage: FirebaseStorage
 
     private lateinit var contactUserImage: ImageView
-    private lateinit var selectedImageUri: Uri
+    private var selectedImageUri: Uri? = null
     private lateinit var saveButton: Button
     private lateinit var cancelButton: Button
 
@@ -92,6 +92,7 @@ class ContactForm : AppCompatActivity() {
         firestore = Firebase.firestore
         storage = Firebase.storage
 
+        val selectedImageUri = selectedImageUri
         if (selectedImageUri != null) {
             val imageRef = storage.reference.child("images/${selectedImageUri.lastPathSegment}")
 
