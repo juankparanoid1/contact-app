@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Contactos</string>
+    <string name="search_label">Buscar</string>
+    <string name="name_label">Nombre</string>
+    <string name="lastName_label">Apellidos</string>
+    <string name="nickname_label">Apodo</string>
+    <string name="cellphone_label">Teléfono</string>
+    <string name="email_label">Correo electrónico</string>
+    <string name="website_label">Website</string>
+    <string name="favorites_title">Favoritos</string>
+    <string name="history_title">Historial</string>
+    <string name="contact_title">Contactos</string>
+    <string name="qr_title">Código QR</string>
+    <string name="all_contacts_title">Todos los contactos</string>
+    <string name="operation_delete">Eliminar</string>
+    <string name="operation_cancel">Cancelar</string>
+    <string name="operation_save">Guardar</string>
+    <string name="operation_qrcode">Qr code</string>
+    <string name="operation_share_text">Texto</string>
+    <string name="dropdown_movil_label">Movil</string>
+    <string name="dropdown_house_label">Casa</string>
+    <string name="bar_favorite_label">Favorito</string>
+    <string name="bar_edit_label">Editar</string>
+    <string name="bar_share_label">Compartir</string>
+    <string name="bar_more_label">Más</string>
+    <string name="qrcode_legend">Escanea el código QR para agregar este contacto</string>
+    <string name="qr_button">Scan QR</string>
+    <string name="image_placeholder">Imagen</string>
+</resources>

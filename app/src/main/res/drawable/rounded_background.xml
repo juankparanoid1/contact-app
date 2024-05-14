@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/drawable/rounded_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="1000dp"/> <!-- Adjust the radius according to your preference -->
+    <solid android:color="@color/color_primary"/> <!-- Sky blue color -->
+    <stroke
+        android:width="5px"
+        android:color="#FFFFFF" />
+</shape>
