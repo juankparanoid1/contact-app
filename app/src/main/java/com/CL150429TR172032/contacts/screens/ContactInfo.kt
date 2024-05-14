@@ -198,7 +198,7 @@ class ContactInfo : AppCompatActivity() {
                 }
                 R.id.bottom_navigation_menu -> {
                     val menuAnchorView = findViewById<View>(R.id.menu_anchor_view)
-                    showPopupMenu(contactId,menuAnchorView)
+                    showPopupMenu(contactId,menuAnchorView, contact)
                     true
                 }
                 R.id.bottom_navigation_share -> {
@@ -214,7 +214,7 @@ class ContactInfo : AppCompatActivity() {
         }
     }
 
-    private fun showPopupMenu(documentId: String, anchorView: View) {
+    private fun showPopupMenu(documentId: String, anchorView: View, contact: Contact) {
         val popup = PopupMenu(this, anchorView)
         popup.menuInflater.inflate(R.menu.contact_info_menu, popup.menu)
         popup.setOnMenuItemClickListener { item ->
@@ -225,6 +225,8 @@ class ContactInfo : AppCompatActivity() {
                 }
                 R.id.menu_qrcode -> {
                     val qrScreen = Intent(this, ContactQR::class.java)
+                    qrScreen.putExtra("contactName", "${contact.name} ${contact.lastName}")
+                    qrScreen.putExtra("contactPhone", contact.cellphone)
                     startActivity(qrScreen)
                     true
                 }
