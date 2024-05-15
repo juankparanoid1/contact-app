@@ -23,12 +23,16 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.get
 import com.CL150429TR172032.contacts.R
 import com.CL150429TR172032.contacts.dto.Contact
+import com.CL150429TR172032.contacts.dto.EventType
+import com.CL150429TR172032.contacts.dto.EventTypeShort
+import com.CL150429TR172032.contacts.dto.History
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
+import java.util.Date
 
 
 class ContactInfo : AppCompatActivity() {
@@ -104,6 +108,14 @@ class ContactInfo : AppCompatActivity() {
 
         whatsappCall = findViewById(R.id.whatsappCall)
         whatsappCall.setOnClickListener {
+            val history = History(
+                Date(),
+                EventType.LLAMADA_REALIZADA_WHATSAPP.label,
+                EventTypeShort.CALL.label,
+                contactId
+            )
+            saveHistory(history)
+
             val phoneNumber = contact.cellphone
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse("https://wa.me/$phoneNumber")
@@ -112,6 +124,13 @@ class ContactInfo : AppCompatActivity() {
 
         whatsappMessage = findViewById(R.id.whatsappMessage)
         whatsappMessage.setOnClickListener {
+            val history = History(
+                Date(),
+                EventType.MENSAJE_WHATSAPP.label,
+                EventTypeShort.MESSAGE.label,
+                contactId
+            )
+            saveHistory(history)
             val message = "Hola ${contact.name}!"
             val url =
                 "https://api.whatsapp.com/send?phone=${contact.cellphone}&text=${Uri.encode(message)}"
@@ -179,7 +198,7 @@ class ContactInfo : AppCompatActivity() {
                 }
                 R.id.bottom_navigation_menu -> {
                     val menuAnchorView = findViewById<View>(R.id.menu_anchor_view)
-                    showPopupMenu(contactId,menuAnchorView)
+                    showPopupMenu(contactId,menuAnchorView, contact)
                     true
                 }
                 R.id.bottom_navigation_share -> {
@@ -195,7 +214,7 @@ class ContactInfo : AppCompatActivity() {
         }
     }
 
-    private fun showPopupMenu(documentId: String, anchorView: View) {
+    private fun showPopupMenu(documentId: String, anchorView: View, contact: Contact) {
         val popup = PopupMenu(this, anchorView)
         popup.menuInflater.inflate(R.menu.contact_info_menu, popup.menu)
         popup.setOnMenuItemClickListener { item ->
@@ -206,6 +225,8 @@ class ContactInfo : AppCompatActivity() {
                 }
                 R.id.menu_qrcode -> {
                     val qrScreen = Intent(this, ContactQR::class.java)
+                    qrScreen.putExtra("contactName", "${contact.name} ${contact.lastName}")
+                    qrScreen.putExtra("contactPhone", contact.cellphone)
                     startActivity(qrScreen)
                     true
                 }
@@ -262,5 +283,14 @@ class ContactInfo : AppCompatActivity() {
             }
         }
         popup.show()
+    }
+
+    private fun saveHistory(history: History) {
+        firestore.collection("history")
+            .add(history)
+            .addOnSuccessListener { doc ->
+            }
+            .addOnFailureListener { error ->
+            }
     }
 }
